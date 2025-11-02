@@ -53,6 +53,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Header/Jucator.h
         Header/Fantoma.h
         Header/Harta.h
+        Header/Joc.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
