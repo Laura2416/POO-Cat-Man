@@ -60,7 +60,7 @@ public:
     }
     void afiseaza() const {
         std::cout << "Jucatorul se afla la (" << x << ", " << y << ")" << ")" << "cu "
-<<vieti << "cieti si scor" << scor << ".\n";
+<<vieti << "vieti si scor" << scor << ".\n";
     }
 };
 

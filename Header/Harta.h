@@ -115,6 +115,14 @@ class Harta {
             matrice[y][x] = ' ';
     }
 
+    bool are_puncte_ramase() const {
+           for (const auto& linie : matrice)
+               for (char c : linie)
+                   if (c == '.') return true;
+           return false;
+       }
+
+
     // === Getteri ===
     int getInaltime() const { return inaltime; }
     int getLatime() const { return latime; }

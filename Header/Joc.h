@@ -83,6 +83,7 @@ private:
                 if (jucator.getVieti() == 0) {
                     ruleaza = false;
                     std::cout << "\nGAME OVER!\n";
+                    std::this_thread::sleep_for(std::chrono::seconds(10));
                 }
             }
         }
@@ -96,16 +97,39 @@ public:
 
     // --- Inițializare joc ---
     bool porneste() {
-        if (!harta.incarca_din_fisier("../Header/harta.txt")) {
+        std::cout << "Alege o harta din 1 (mica), 2 (medie), 3 (mare): ";
+        int opt;
+        std::string numeFisier;
+        int h=0, tries=0;
+        while (!h && tries<=10 ) {
+            std::cin >> opt;
+            switch (opt) {
+                case 1: {numeFisier = "../Header/harta1.txt"; h=1; break;}
+                case 2: {numeFisier = "../Header/harta2.txt"; h=1; break;}
+                case 3: {numeFisier = "../Header/harta3.txt"; h=1; break;}
+                default: {std::cout<< "Alege una din hartile valabile! (1,2 sau 3): "; tries++;}
+            }
+            if (tries==10) std::cout<<"Mai ai o SINGURA incercare: ";
+            else if (tries>10) {
+                std::cout<<"Game Over n-ai putut alege o harta! \n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                std::cout<<"Pa!";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                return false;
+            }
+        }
+        if (!harta.incarca_din_fisier(numeFisier)) {
             std::cerr << "Eroare la încărcarea hărții.\n";
             return false;
         }
 
         jucator = Jucator(2, 2);
+        fantome.clear();
         fantome.push_back(Fantoma(10, 3, "albastră"));
         fantome.push_back(Fantoma(15, 4, "roșie"));
         return true;
     }
+
 
     // --- Afișare starea curentă ---
     void afiseaza() {
@@ -117,8 +141,8 @@ public:
             pozFantome.emplace_back(f.getX(), f.getY());
 
         harta.afiseaza(jucator.getX(), jucator.getY(), pozFantome);
-        std::cout << "\n Scor: " << jucator.getScor() << "    Vieți: " << jucator.getVieti() << "\n";
-        std::cout << "(W/A/S/D pentru mișcare, Q pentru ieșire)\n";
+        std::cout << "\n Scor: " << jucator.getScor() << "    Vieti: " << jucator.getVieti() << "\n";
+        std::cout << "(W/A/S/D pentru miscare, Q pentru iesire)\n";
     }
 
     // --- Actualizare logică joc ---
@@ -144,6 +168,15 @@ public:
                     harta.sterge_punct(nouX, nouY);
                 }
             }
+            // După verificarea coliziunilor
+            if (!harta.are_puncte_ramase()) {
+                afiseaza();
+                std::cout << "\n Ai castigat! Ai mancat toate punctele!\n";
+                std::this_thread::sleep_for(std::chrono::seconds(10));
+                ruleaza = false;
+                return;
+            }
+
         }
 
         // mișcare fantome

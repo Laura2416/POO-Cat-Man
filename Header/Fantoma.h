@@ -20,7 +20,8 @@ public:
     int getY() const { return y; }
     std::string getCuloare() const { return culoare; }
 
-    // Mută fantoma aleator, dar doar dacă nu e perete
+    // Muta fantoma aleator, dar doar daca nu e perete
+    //Urmeaza se se mute in functie de personalitatea fiecareia, bazat pe pozitia lui Catman
     void muta_random(const Harta& harta) {
         int directie = rand() % 4;
         int nouX = x, nouY = y;
