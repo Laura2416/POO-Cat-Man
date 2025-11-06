@@ -71,10 +71,31 @@ class Harta {
     }
 
     // === Afișare hartă ===
-    void afiseaza() const {
-        for (const auto& linie : matrice)
-            std::cout << linie << '\n';
-    }
+    void afiseaza(int jucatorX, int jucatorY, const std::vector<std::pair<int, int>>& fantome) const {
+           for (int y = 0; y < inaltime; ++y) {
+               for (int x = 0; x < latime; ++x) {
+                   bool desenat = false;
+
+                   if (x == jucatorX && y == jucatorY) {
+                       std::cout << 'P';
+                       desenat = true;
+                   } else {
+                       for (const auto& f : fantome) {
+                           if (x == f.first && y == f.second) {
+                               std::cout << 'F';
+                               desenat = true;
+                               break;
+                           }
+                       }
+                   }
+
+                   if (!desenat)
+                       std::cout << matrice[y][x];
+               }
+               std::cout << '\n';
+           }
+       }
+
 
     // === Verifică dacă o poziție e perete ===
     bool este_perete(int x, int y) const {
