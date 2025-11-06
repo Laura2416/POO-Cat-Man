@@ -54,6 +54,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Header/Fantoma.h
         Header/Harta.h
         Header/Joc.h
+        Header/Energizer.cpp
+        Header/Energizer.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -81,5 +83,8 @@ if(APPLE)
 endif()
 
 copy_files(FILES tastatura.txt COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+copy_files(DIRECTORY maps COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+
+
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
 # copy_files(DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})

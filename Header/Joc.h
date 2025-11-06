@@ -12,10 +12,9 @@
 #include "Jucator.h"
 #include "Fantoma.h"
 #include "Harta.h"
+#include "Energizer.h"
 
-// ==========================
-// 🔹 Compatibilitate tastatură
-// ==========================
+
 #ifdef _WIN32
 #include <conio.h>
 #else
@@ -64,38 +63,40 @@ int _getch() {
 }
 #endif
 
-// ==========================
-// 🔹 Clasa Joc
-// ==========================
+
 class Joc {
 private:
     Harta harta;
     Jucator jucator;
     std::vector<Fantoma> fantome;
+    std::vector<Energizer> energize;
+    std::chrono::steady_clock::time_point ultim_spawn;
     bool ruleaza;
 
-    // --- Funcție privată: verifică coliziuni ---
+
     void verifica_coliziuni() {
         for (auto& f : fantome) {
             if (f.getX() == jucator.getX() && f.getY() == jucator.getY()) {
-                std::cout << " Ai fost prins de o fantomă!\n";
-                jucator.pierdeViata();
-                if (jucator.getVieti() == 0) {
-                    ruleaza = false;
-                    std::cout << "\nGAME OVER!\n";
-                    std::this_thread::sleep_for(std::chrono::seconds(10));
+                if (!jucator.esteInvincibil()) {
+                    std::cout << " Ai fost prins de o fantomă!\n";
+                    jucator.pierdeViata();
+                    if (jucator.getVieti() == 0) {
+                        ruleaza = false;
+                        std::cout << "\nGAME OVER!\n";
+                        std::this_thread::sleep_for(std::chrono::seconds(10));
+                    }
                 }
             }
         }
     }
 
 public:
-    // --- Constructor ---
+
     Joc() : ruleaza(true) {
         srand(static_cast<unsigned>(time(nullptr)));
     }
 
-    // --- Inițializare joc ---
+
     bool porneste() {
         std::cout << "Alege o harta din 1 (mica), 2 (medie), 3 (mare): ";
         int opt;
@@ -127,25 +128,36 @@ public:
         fantome.clear();
         fantome.push_back(Fantoma(10, 3, "albastră"));
         fantome.push_back(Fantoma(15, 4, "roșie"));
+        energize.clear();
+        ultim_spawn = std::chrono::steady_clock::now();
+
         return true;
     }
 
 
-    // --- Afișare starea curentă ---
+
     void afiseaza() {
-        // Mută cursorul la începutul terminalului (fără a șterge tot)
-        std::cout << "\033[H\033[J";  // "escape sequence" pentru cursor + clear parțial
+
+        std::cout << "\033[H\033[J";
 
         std::vector<std::pair<int, int>> pozFantome;
+        pozFantome.reserve(fantome.size());
         for (const auto& f : fantome)
             pozFantome.emplace_back(f.getX(), f.getY());
 
-        harta.afiseaza(jucator.getX(), jucator.getY(), pozFantome);
+        std::vector<std::pair<int, int>> pozEnergize;
+        pozEnergize.reserve(energize.size());
+        for (const auto& e : energize)
+            if (e.esteActiv()) pozEnergize.emplace_back(e.getX(), e.getY());
+
+        harta.afiseaza(jucator.getX(), jucator.getY(), pozFantome, pozEnergize);
         std::cout << "\n Scor: " << jucator.getScor() << "    Vieti: " << jucator.getVieti() << "\n";
+        if (jucator.esteInvincibil()) std::cout<< "INVINCIBIL\n";
         std::cout << "(W/A/S/D pentru miscare, Q pentru iesire)\n";
+        std::cout.flush();
     }
 
-    // --- Actualizare logică joc ---
+
     void actualizeaza() {
         if (_kbhit()) {
             char tasta = _getch();
@@ -159,6 +171,14 @@ public:
                 case 'd': nouX++; break;
                 case 'q': ruleaza = false; return;
                 default: return;
+            }
+
+            auto acum=std::chrono::steady_clock::now();
+            if (std::chrono::duration_cast<std::chrono::seconds>(acum-ultim_spawn).count()>10) {
+                Energizer e;
+                e.setPozitieRandom(harta.getMatrice());
+                energize.push_back(e);
+                ultim_spawn=acum;
             }
 
             if (!harta.este_perete(nouX, nouY)) {
@@ -179,14 +199,22 @@ public:
 
         }
 
-        // mișcare fantome
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         for (auto& f : fantome)
             f.muta_random(harta);
-
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! vreau sa le fac sa se mute mai bine
         verifica_coliziuni();
+        for (auto& e : energize){
+            if (e.esteActiv() && e.getX()==jucator.getX() && e.getY()==jucator.getY()) {
+                e.dezactiveaza();
+                jucator.activeazaInvincibilitate();
+                jucator.adaugaScor(50);
+                std::cout << "Ai colectat un energizer! Esti invincibil!\n";
+            }
+        }
     }
 
-    // --- Rulează jocul ---
+
     void ruleaza_joc() {
         if (!porneste()) return;
 
@@ -197,7 +225,7 @@ public:
         }
     }
 
-    // --- Operator << pentru afișare ---
+
     friend std::ostream& operator<<(std::ostream& os, const Joc& j) {
         os << "Joc cu " << j.fantome.size() << " fantome și un jucător.\n";
         os << j.harta;

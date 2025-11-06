@@ -16,18 +16,18 @@ class Harta {
     public:
        Harta() : inaltime(0), latime(0) {}
 
-    // === Constructor cu parametru ===
+
     explicit Harta(const std::string& fisier) {
         incarca_din_fisier(fisier);
     }
 
-    // === Constructor de copiere ===
+
     Harta(const Harta& other)
         : matrice(other.matrice), inaltime(other.inaltime), latime(other.latime) {
         std::cout << "[DEBUG] Constructor de copiere apelat pentru Harta\n";
     }
 
-    // === Operator de copiere ===
+
     Harta& operator=(const Harta& other) {
         if (this != &other) {
             matrice = other.matrice;
@@ -38,13 +38,13 @@ class Harta {
         return *this;
     }
 
-    // === Destructor ===
+
     ~Harta() {
         std::cout << "[DEBUG] Destructor apelat pentru Harta\n";
         matrice.clear();
     }
 
-    // === Functie de incarcare a hartii din fisier ===
+
     bool incarca_din_fisier(const std::string& numeFisier) {
         std::ifstream fin(numeFisier);
         if (!fin.is_open()) {
@@ -70,46 +70,55 @@ class Harta {
         return true;
     }
 
-    // === Afișare hartă ===
-    void afiseaza(int jucatorX, int jucatorY, const std::vector<std::pair<int, int>>& fantome) const {
+
+    void afiseaza(int jucatorX, int jucatorY, const std::vector<std::pair<int, int>>& fantome, const std::vector<std::pair<int, int>>& energize) const {
            for (int y = 0; y < inaltime; ++y) {
                for (int x = 0; x < latime; ++x) {
                    bool desenat = false;
-
-                   if (x == jucatorX && y == jucatorY) {
-                       std::cout << 'P';
-                       desenat = true;
-                   } else {
-                       for (const auto& f : fantome) {
-                           if (x == f.first && y == f.second) {
-                               std::cout << 'F';
+                    if (x== jucatorX && y == jucatorY) {
+                        desenat = true;
+                        std::cout<<'P';
+                    }
+                   if (!desenat) {
+                       for (const auto& f: fantome) {
+                           if (x== f.first && y == f.second) {
+                             std::cout<< 'F';
                                desenat = true;
                                break;
                            }
                        }
                    }
+                   if (!desenat) {
+                       for (const auto& e : energize)
+                           if (x== e.first && y == e.second) {
+                               std::cout<< '$';
+                               desenat = true;
+                               break;
+                           }
+                   }
+                   if (!desenat) {
+                       std::cout<< matrice[y][x];
+                   }
 
-                   if (!desenat)
-                       std::cout << matrice[y][x];
                }
                std::cout << '\n';
            }
        }
 
 
-    // === Verifică dacă o poziție e perete ===
+
     bool este_perete(int x, int y) const {
         if (!este_in_limite(x, y)) return true;
         return matrice[y][x] == '#';
     }
 
-    // === Verifică dacă e un punct de mâncare ===
+
     bool este_punct(int x, int y) const {
         if (!este_in_limite(x, y)) return false;
         return matrice[y][x] == '.';
     }
 
-    // === Șterge punctul (după ce e mâncat) ===
+
     void sterge_punct(int x, int y) {
         if (este_in_limite(x, y) && matrice[y][x] == '.')
             matrice[y][x] = ' ';
@@ -123,11 +132,11 @@ class Harta {
        }
 
 
-    // === Getteri ===
+
     int getInaltime() const { return inaltime; }
     int getLatime() const { return latime; }
+    const std::vector<std::string>& getMatrice() const { return matrice; }
 
-    // === Operator << pentru afișare ===
     friend std::ostream& operator<<(std::ostream& os, const Harta& h) {
         os << "Harta (" << h.latime << "x" << h.inaltime << "):\n";
         for (const auto& linie : h.matrice)

@@ -7,7 +7,9 @@
 class Jucator {
     int x,y;
     int viteza, vieti, scor;
+    bool invincibil;
     char directie; // 'U'=sus 'D'=jos 'L'=left 'R'=right
+    std::chrono::steady_clock::time_point start_invincibil;
 
 public:
     Jucator() {
@@ -16,6 +18,8 @@ public:
         vieti=3;
         scor=0;
         directie='R';
+        invincibil=false;
+
     }
 
     Jucator (int xInit, int yInit) {
@@ -25,6 +29,7 @@ public:
         vieti=3;
         scor=0;
         directie='R';
+        invincibil=false;
     }
 
     int getX() const { return x; }
@@ -54,9 +59,27 @@ public:
         scor+=10;
     }
 
+    void adaugaScor(int s) {
+        scor+=s;
+    }
+
     void pierdeViata() {
         vieti--;
         if (vieti<0) vieti=0;
+    }
+    void activeazaInvincibilitate() {
+        invincibil=true;
+        start_invincibil=std::chrono::steady_clock::now();
+    }
+    bool esteInvincibil() {
+        if (invincibil) {
+            auto acum=std::chrono::steady_clock::now();
+            auto durata= std::chrono::duration_cast<std::chrono::seconds>(acum-start_invincibil).count();
+            if (durata > 3) {
+                invincibil=false;
+            }
+        }
+        return invincibil;
     }
     void afiseaza() const {
         std::cout << "Jucatorul se afla la (" << x << ", " << y << ")" << ")" << "cu "
