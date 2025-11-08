@@ -55,8 +55,8 @@ class Energizer {
 
     void setPozitieRandom(const std::vector<std::string>& matrice) {
         std::ofstream log("../debug/debug.txt", std::ios::app);
-        log << "Pornit seteazaPozitieRandom()" << std::endl;
-        log.close();
+        //log << "Pornit seteazaPozitieRandom()" << std::endl;
+        //log.close();
         if (matrice.empty() || matrice[0].empty()) {
             std::cerr << "[Eroare] Harta goala — nu pot genera energizer.\n";
             return;
@@ -75,11 +75,11 @@ class Energizer {
         while (true) {
             nouX=rand()%latime;
             nouY=rand()%inaltime;
-            std::ofstream log("debug.txt", std::ios::app);
-            log << "nouX=" << nouX << " nouY=" << nouY
-                << " matrice[" << nouY << "].size()=" << matrice[nouY].size()
-                << std::endl;
-            log.close();
+            //std::ofstream log("debug.txt", std::ios::app);
+            //log << "nouX=" << nouX << " nouY=" << nouY
+            //    << " matrice[" << nouY << "].size()=" << matrice[nouY].size()
+            //    << std::endl;
+            //log.close();
 
             if (nouY>=0 && nouY<inaltime && nouX>=0 && nouX<(int)matrice[nouY].size() && matrice[nouY][nouX]!='#') break;
             if (++incercari==MAX_INCERCARI) {
