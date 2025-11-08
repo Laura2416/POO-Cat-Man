@@ -105,9 +105,9 @@ public:
         while (!h && tries<=10 ) {
             std::cin >> opt;
             switch (opt) {
-                case 1: {numeFisier = "../Header/harta1.txt"; h=1; break;}
-                case 2: {numeFisier = "../Header/harta2.txt"; h=1; break;}
-                case 3: {numeFisier = "../Header/harta3.txt"; h=1; break;}
+                case 1: {numeFisier = "../maps/harta1.txt"; h=1; break;}
+                case 2: {numeFisier = "../maps/harta2.txt"; h=1; break;}
+                case 3: {numeFisier = "../maps/harta3.txt"; h=1; break;}
                 default: {std::cout<< "Alege una din hartile valabile! (1,2 sau 3): "; tries++;}
             }
             if (tries==10) std::cout<<"Mai ai o SINGURA incercare: ";
@@ -204,14 +204,18 @@ public:
             f.muta_random(harta);
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! vreau sa le fac sa se mute mai bine
         verifica_coliziuni();
-        for (auto& e : energize){
-            if (e.esteActiv() && e.getX()==jucator.getX() && e.getY()==jucator.getY()) {
-                e.dezactiveaza();
+        for (int i = 0; i < (int)energize.size(); ++i) {
+            if (energize[i].esteActiv() &&
+                energize[i].getX() == jucator.getX() &&
+                energize[i].getY() == jucator.getY()) {
+
+                energize[i].dezactiveaza();
                 jucator.activeazaInvincibilitate();
                 jucator.adaugaScor(50);
                 std::cout << "Ai colectat un energizer! Esti invincibil!\n";
-            }
+                }
         }
+
     }
 
 

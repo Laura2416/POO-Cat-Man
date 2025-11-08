@@ -81,6 +81,7 @@ public:
         }
         return invincibil;
     }
+
     void afiseaza() const {
         std::cout << "Jucatorul se afla la (" << x << ", " << y << ")" << ")" << "cu "
 <<vieti << "vieti si scor" << scor << ".\n";

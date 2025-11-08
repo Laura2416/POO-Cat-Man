@@ -56,6 +56,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Header/Joc.h
         Header/Energizer.cpp
         Header/Energizer.h
+        Header/Meniu.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

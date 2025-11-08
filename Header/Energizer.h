@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <fstream>
 
 
 class Energizer {
@@ -53,13 +54,39 @@ class Energizer {
     }
 
     void setPozitieRandom(const std::vector<std::string>& matrice) {
+        std::ofstream log("../debug/debug.txt", std::ios::app);
+        log << "Pornit seteazaPozitieRandom()" << std::endl;
+        log.close();
+        if (matrice.empty() || matrice[0].empty()) {
+            std::cerr << "[Eroare] Harta goala — nu pot genera energizer.\n";
+            return;
+        }
         int inaltime=matrice.size();
         int latime=matrice[0].size();
         int nouX, nouY;
-        do {
+        for (const auto& linie : matrice) {
+            if ((int)linie.size() != latime) {
+                std::cerr << "[Eroare] Harta invalida: liniile au lungimi diferite.\n";
+                return;
+            }
+        }
+        int incercari=0;
+        const int MAX_INCERCARI=10000;
+        while (true) {
             nouX=rand()%latime;
             nouY=rand()%inaltime;
-        } while (matrice[nouX][nouY]=='#');
+            std::ofstream log("debug.txt", std::ios::app);
+            log << "nouX=" << nouX << " nouY=" << nouY
+                << " matrice[" << nouY << "].size()=" << matrice[nouY].size()
+                << std::endl;
+            log.close();
+
+            if (nouY>=0 && nouY<inaltime && nouX>=0 && nouX<(int)matrice[nouY].size() && matrice[nouY][nouX]!='#') break;
+            if (++incercari==MAX_INCERCARI) {
+                std::cerr<<"Nu s-a putut gasi o pozitie libera pt energizer";
+                return;
+            }
+        }
         x=nouX;
         y=nouY;
         activ=true;

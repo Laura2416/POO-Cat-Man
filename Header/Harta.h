@@ -105,7 +105,49 @@ class Harta {
            }
        }
 
+    void veziHarti() {
+           std::cout<< "    Vizualizare harti disponibile momentan   \n";
+           std::cout<<"1. Harta mica\n";
+           std::cout<<"2. Harta medie\n";
+           std::cout<<"3. Harta mare\n";
+           std::cout<<"Alege una dintre optiuni pentru a o vizualiza: ";
 
+           int opt;
+           std::cin>>opt;
+           if (std::cin.fail()) {
+               std::cin.clear();
+               std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+               std::cout << "Input invalid. Revenim la meniu.\n";
+               return;
+           }
+           std::string numeFisier;
+           switch (opt) {
+               case 1: {numeFisier = "../maps/harta1.txt"; break;}
+               case 2: {numeFisier = "../maps/harta2.txt"; break;}
+               case 3: {numeFisier = "../maps/harta3.txt"; break;}
+               case 0: return;
+                   default: {
+                       std::cout<< "Optiune invalida.\n";
+                       return;
+                   }
+           }
+           if (!incarca_din_fisier(numeFisier)) {
+               std::cerr<< "eroare la incarcarea hartii.\n";
+               return;
+           }
+           std::cout<< "---Harta selectata---\n";
+           for (const auto& linie: matrice)
+               std::cout<< linie << '\n';
+
+           int puncte=0;
+           for (const auto& linie : matrice)
+               for (char c : linie)
+                   if (c=='.') puncte++;
+           std::cout <<"\nDimensiune: "<< inaltime<<"x "<<latime<<" | Puncte: "<< puncte << "\n";
+            std::cout<< "Apasa ENTER pentru a reveni la maniu...";
+           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+           std::cin.get();
+       }
 
     bool este_perete(int x, int y) const {
         if (!este_in_limite(x, y)) return true;
