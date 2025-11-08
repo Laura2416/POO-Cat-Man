@@ -54,6 +54,6 @@ class Meniu {
         std::cin.get();
     }
 
-    [[maybe_unused]] getOpt() const {return optSelectata;}
+    getOpt() const {return optSelectata;} // cppcheck-suppress unusedFunction
 };
 #endif //OOP_MENIU_H

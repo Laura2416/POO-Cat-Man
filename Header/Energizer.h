@@ -47,7 +47,7 @@ class Energizer {
     int getX() const {return x;}
     int getY() const {return y;}
     bool esteActiv() const{ return activ;}
-    [[maybe_unused]] getDurata() const {return durata;}
+    int getDurata() const {return durata;} // cppcheck-suppress unusedFunction
 
     void dezactiveaza() {
         activ=false;

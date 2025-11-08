@@ -42,18 +42,18 @@ public:
         y=nouY;
     }
 
-    [[maybe_unused]] setDirectie (char d) {
+    setDirectie (char d) {
         if (d=='U' || d=='D' || d=='L' || d=='R')
             directie=d;
-    }
-    [[maybe_unused]] muta() {
+    } // cppcheck-suppress unusedFunction
+    muta() {
         switch (directie) {
             case 'U': y-=viteza; break;
             case 'D': y+=viteza; break;
             case 'L': y-=viteza; break;
             case 'R': y+=viteza; break;
         }
-    }
+    } // cppcheck-suppress unusedFunction
 
     void manancaPunct() {
         scor+=10;
