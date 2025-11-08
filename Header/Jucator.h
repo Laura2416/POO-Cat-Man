@@ -42,18 +42,18 @@ public:
         y=nouY;
     }
 
-    setDirectie (char d) {
-        if (d=='U' || d=='D' || d=='L' || d=='R')
-            directie=d;
-    } // cppcheck-suppress unusedFunction
-    muta() {
-        switch (directie) {
-            case 'U': y-=viteza; break;
-            case 'D': y+=viteza; break;
-            case 'L': y-=viteza; break;
-            case 'R': y+=viteza; break;
-        }
-    } // cppcheck-suppress unusedFunction
+    //setDirectie (char d) {
+    //    if (d=='U' || d=='D' || d=='L' || d=='R')
+     //       directie=d;
+    //}
+    //muta() {
+    //    switch (directie) {
+    //        case 'U': y-=viteza; break;
+    //        case 'D': y+=viteza; break;
+     //       case 'L': y-=viteza; break;
+     //       case 'R': y+=viteza; break;
+     //   }
+    //}
 
     void manancaPunct() {
         scor+=10;

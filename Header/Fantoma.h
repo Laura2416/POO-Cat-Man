@@ -18,7 +18,7 @@ public:
 
     int getX() const { return x; }
     int getY() const { return y; }
-    const std::string getCuloare() const { return culoare; } // cppcheck-suppress unusedFunction
+    //const std::string getCuloare() const { return culoare; }
 
     // Muta fantoma aleator, dar doar daca nu e perete
     //Urmeaza se se mute in functie de personalitatea fiecareia, bazat pe pozitia lui Catman

@@ -175,8 +175,8 @@ class Harta {
 
 
 
-    getInaltime() const { return inaltime; } // cppcheck-suppress unusedFunction
-    getLatime() const { return latime; } // cppcheck-suppress unusedFunction
+    //getInaltime() const { return inaltime; }
+    //getLatime() const { return latime; }
     const std::vector<std::string>& getMatrice() const { return matrice; }
 
     friend std::ostream& operator<<(std::ostream& os, const Harta& h) {
