@@ -79,6 +79,7 @@ class Energizer {
             //log << "nouX=" << nouX << " nouY=" << nouY
             //    << " matrice[" << nouY << "].size()=" << matrice[nouY].size()
             //    << std::endl;
+
             //log.close();
 
             if (nouY>=0 && nouY<inaltime && nouX>=0 && nouX<(int)matrice[nouY].size() && matrice[nouY][nouX]!='#') break;
