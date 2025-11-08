@@ -42,11 +42,11 @@ public:
         y=nouY;
     }
 
-    void setDirectie (char d) {
+    [[maybe_unused]] setDirectie (char d) {
         if (d=='U' || d=='D' || d=='L' || d=='R')
             directie=d;
     }
-    void muta() {
+    [[maybe_unused]] muta() {
         switch (directie) {
             case 'U': y-=viteza; break;
             case 'D': y+=viteza; break;

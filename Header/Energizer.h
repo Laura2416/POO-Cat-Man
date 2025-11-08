@@ -47,7 +47,7 @@ class Energizer {
     int getX() const {return x;}
     int getY() const {return y;}
     bool esteActiv() const{ return activ;}
-    int getDurata() const {return durata;}
+    [[maybe_unused]] getDurata() const {return durata;}
 
     void dezactiveaza() {
         activ=false;

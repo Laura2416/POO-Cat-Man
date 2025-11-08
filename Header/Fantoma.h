@@ -13,12 +13,12 @@ private:
     std::string culoare;
 
 public:
-    Fantoma(int x = 0, int y = 0, const std::string& c = "albastră")
+    explicit Fantoma(int x = 0, int y = 0, const std::string& c = "albastră")
         : x(x), y(y), culoare(c) {}
 
     int getX() const { return x; }
     int getY() const { return y; }
-    std::string getCuloare() const { return culoare; }
+    [[maybe_unused]] std::string getCuloare() const { return culoare; }
 
     // Muta fantoma aleator, dar doar daca nu e perete
     //Urmeaza se se mute in functie de personalitatea fiecareia, bazat pe pozitia lui Catman

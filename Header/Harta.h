@@ -175,8 +175,8 @@ class Harta {
 
 
 
-    int getInaltime() const { return inaltime; }
-    int getLatime() const { return latime; }
+    [[maybe_unused]] getInaltime() const { return inaltime; }
+    [[maybe_unused]] getLatime() const { return latime; }
     const std::vector<std::string>& getMatrice() const { return matrice; }
 
     friend std::ostream& operator<<(std::ostream& os, const Harta& h) {

@@ -75,7 +75,7 @@ private:
 
 
     void verifica_coliziuni() {
-        for (auto& f : fantome) {
+        for (const auto& f : fantome) {
             if (f.getX() == jucator.getX() && f.getY() == jucator.getY()) {
                 if (!jucator.esteInvincibil()) {
                     std::cout << " Ai fost prins de o fantomă!\n";

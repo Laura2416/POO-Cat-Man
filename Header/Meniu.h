@@ -54,6 +54,6 @@ class Meniu {
         std::cin.get();
     }
 
-    int getOpt() const {return optSelectata;}
+    [[maybe_unused]] getOpt() const {return optSelectata;}
 };
 #endif //OOP_MENIU_H
