@@ -1,5 +1,5 @@
 # Cat-Man
-Scurta descriere- "Cat-Man" va fi un joc inspirat dupa originalul "Pacman", doar cu, pisici. In loc de faimosul cerc galben, va fi o pisica, ce va fi urmarita nu de fantome, ci de catei! La fel ca in jocul original, cateii vor avea fiecare personalitatea lor cand vine vorba de interactiunea cu "Cat-Man", iar jucatorul va trebui sa se adapteze. In loc de bilele pe care le colecta Pacman, acum vom colecta treaturi!!
+Scurta descriere- "Cat-Man" va fi un joc inspirat dupa originalul "Pacman", doar cu, pisici. In loc de faimosul cerc galben, va fi o pisica, ce va fi urmarita nu de fantome, ci de catei! La fel ca in jocul original, cateii vor avea fiecare personalitatea lor cand vine vorba de interactiunea cu "Cat-Man", iar jucatorul va trebui sa se adapteze. In loc de bilele pe care le colecta Pacman, acum vom colecta treaturi!! (to be expanded)
 ### Folosiți template-ul corespunzător grupei voastre!
 
 | Laborant  | Link template                                |
