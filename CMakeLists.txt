@@ -54,7 +54,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Header/Fantoma.h
         Header/Harta.h
         Header/Joc.h
-        Header/Energizer.cpp
         Header/Energizer.h
         Header/Meniu.h
 )

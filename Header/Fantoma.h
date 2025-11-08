@@ -40,7 +40,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Fantoma& f) {
-        os << "Fantoma (" << f.culoare << ") la (" << f.x << ", " << f.y << ")";
+        os << "Fantoma (" << f.culoare << ") la (" << f.x << ", " << f.y << ")\n";
         return os;
     }
 };

@@ -55,5 +55,10 @@ class Meniu {
     }
 
     //getOpt() const {return optSelectata;} // cppcheck-suppress unusedFunction
+    friend std::ostream& operator<<(std::ostream& os, const Meniu& m) {
+        os << "Meniu principal (ultima opțiune selectată: "
+           << (m.optSelectata == 0 ? "niciuna" : std::to_string(m.optSelectata)) << ")";
+        return os;
+    }
 };
 #endif //OOP_MENIU_H

@@ -93,9 +93,9 @@ class Energizer {
         activ=true;
     }
     friend std::ostream& operator<<(std::ostream& os, const Energizer& e) {
-        if (e.activ)
-            os<< "Activ";
-            else os<< "Inactiv";
+        os << "Energizer (" << e.x << "," << e.y << ") "
+           << (e.activ ? "Activ" : "Inactiv")
+           << " | durata=" << e.durata << "s";
         return os;
     }
 

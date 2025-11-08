@@ -82,9 +82,12 @@ public:
         return invincibil;
     }
 
-    void afiseaza() const {
-        std::cout << "Jucatorul se afla la (" << x << ", " << y << ")" << ")" << "cu "
-<<vieti << "vieti si scor" << scor << ".\n";
+    friend std::ostream& operator<<(std::ostream& os, const Jucator& j) {
+        os << "Jucator (" << j.x << "," << j.y << ")"
+           << " | vieti=" << j.vieti
+           << " | scor=" << j.scor
+           << " | invincibil=" << (j.invincibil ? "da" : "nu");
+        return os;
     }
 };
 
