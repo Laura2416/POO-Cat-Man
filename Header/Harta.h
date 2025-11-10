@@ -122,14 +122,18 @@ class Harta {
            }
            std::string numeFisier;
            switch (opt) {
-               case 1: {numeFisier = "../maps/harta1.txt"; break;}
-               case 2: {numeFisier = "../maps/harta2.txt"; break;}
-               case 3: {numeFisier = "../maps/harta3.txt"; break;}
+               case 1: {numeFisier = "maps/harta1.txt"; break;}
+               case 2: {numeFisier = "maps/harta2.txt"; break;}
+               case 3: {numeFisier = "maps/harta3.txt"; break;}
                case 0: return;
                    default: {
                        std::cout<< "Optiune invalida.\n";
                        return;
                    }
+           }
+           std::ifstream test(numeFisier);
+           if (!test.is_open()) {
+               numeFisier = "../" + numeFisier;
            }
            if (!incarca_din_fisier(numeFisier)) {
                std::cerr<< "eroare la incarcarea hartii.\n";
