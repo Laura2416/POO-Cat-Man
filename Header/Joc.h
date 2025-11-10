@@ -98,29 +98,42 @@ public:
 
 
     bool porneste() {
+        std::cin.clear();
+        std::cin.sync();
         std::cout << "Alege o harta din 1 (mica), 2 (medie), 3 (mare): ";
         int opt;
         std::string numeFisier;
-        int h=0, tries=0;
-        while (!h && tries<=10 ) {
+        int h = 0, tries = 0;
+
+        while (!h && tries <= 10) {
             std::cin >> opt;
             switch (opt) {
-                case 1: {numeFisier = "../maps/harta1.txt"; h=1; break;}
-                case 2: {numeFisier = "../maps/harta2.txt"; h=1; break;}
-                case 3: {numeFisier = "../maps/harta3.txt"; h=1; break;}
-                default: {std::cout<< "Alege una din hartile valabile! (1,2 sau 3): "; tries++;}
+                case 1: numeFisier = "maps/harta1.txt"; h = 1; break;
+                case 2: numeFisier = "maps/harta2.txt"; h = 1; break;
+                case 3: numeFisier = "maps/harta3.txt"; h = 1; break;
+                default:
+                    std::cout << "Alege una din hartile valabile! (1,2,3): ";
+                    tries++;
             }
-            if (tries==10) std::cout<<"Mai ai o SINGURA incercare: ";
-            else if (tries>10) {
-                std::cout<<"Game Over n-ai putut alege o harta! \n";
+
+            if (tries == 10) std::cout << "Mai ai o SINGURA incercare: ";
+            else if (tries > 10) {
+                std::cout << "Game Over, n-ai putut alege o harta!\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
-                std::cout<<"Pa!";
+                std::cout << "Pa!\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
                 return false;
             }
         }
+
+
+        std::ifstream test(numeFisier);
+        if (!test.is_open()) {
+            numeFisier = "../" + numeFisier;
+        }
+
         if (!harta.incarca_din_fisier(numeFisier)) {
-            std::cerr << "Eroare la încărcarea hărții.\n";
+            std::cerr << "Eroare la încărcarea hărții: " << numeFisier << "\n";
             return false;
         }
 
@@ -138,7 +151,13 @@ public:
 
     void afiseaza() {
 
-        std::cout << "\033[H\033[J";
+
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+
 
         std::vector<std::pair<int, int>> pozFantome;
         pozFantome.reserve(fantome.size());
@@ -232,7 +251,15 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Joc& j) {
         os << "Joc cu " << j.fantome.size() << " fantome și un jucător.\n";
-        os << j.harta;
+        os << j.harta << "\n";
+        os << j.jucator << "\n";
+
+        for (const auto& f : j.fantome)
+            os << f << "\n";
+
+        for (const auto& e : j.energize)
+            os << e << "\n";
+
         return os;
     }
 };

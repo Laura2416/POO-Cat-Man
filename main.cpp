@@ -17,6 +17,7 @@ srand(time(nullptr));
     while (ruleaza) {
         meniu.afiseaza();
         int opt=meniu.citesteOpt();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         switch (opt) {
             case 1: {
                 if (joc.porneste()) joc.ruleaza_joc();

@@ -179,12 +179,14 @@ class Harta {
     //getLatime() const { return latime; }
     const std::vector<std::string>& getMatrice() const { return matrice; }
 
+
     friend std::ostream& operator<<(std::ostream& os, const Harta& h) {
-        os << "Harta (" << h.latime << "x" << h.inaltime << "):\n";
-        for (const auto& linie : h.matrice)
-            os << linie << '\n';
-        return os;
-    }
+           os << "Harta (" << h.latime << "x" << h.inaltime << "):\n";
+           for (const auto& linie : h.matrice)
+               os << linie << '\n';
+           return os;
+       }
+
 };
 
 #endif //OOP_HARTA_H
