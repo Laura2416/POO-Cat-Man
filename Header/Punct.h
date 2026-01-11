@@ -1,17 +1,15 @@
 #pragma once
 #include "Entitate.h"
 
-class Energizer : public Entitate {
+class Punct : public Entitate {
     bool activ;
 public:
-    Energizer(int,int);
+    Punct(int,int);
 
-    bool esteActiv() const;
-    void dezactiveaza();
-
-    void update(const Harta&) override;
+    void update(const Harta&) override {}
     void interact(Jucator&) override;
     std::unique_ptr<Entitate> clone() const override;
     void print(std::ostream&) const override;
-};
 
+    bool esteActiv() const;
+};

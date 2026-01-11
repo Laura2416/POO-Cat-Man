@@ -1,94 +1,28 @@
-#ifndef OOP_JUCATOR_H
-#define OOP_JUCATOR_H
+#pragma once
+#include "Entitate.h"
+#include <chrono>
 
-#include <iostream>
-#include <string>
-
-class Jucator {
-    int x,y;
-    int viteza, vieti, scor;
+class Jucator : public Entitate {
+    int vieti;
+    int scor;
     bool invincibil;
-    char directie; // 'U'=sus 'D'=jos 'L'=left 'R'=right
-    std::chrono::steady_clock::time_point start_invincibil;
+    std::chrono::steady_clock::time_point startInv;
 
 public:
-    Jucator() {
-        x=y=0;
-        viteza=1;
-        vieti=3;
-        scor=0;
-        directie='R';
-        invincibil=false;
+    Jucator(int x, int y);
 
-    }
+    int getVieti() const;
+    int getScor() const;
+    bool esteInvincibil() const;
 
-    Jucator (int xInit, int yInit) {
-        x=xInit;
-        y=yInit;
-        viteza=1;
-        vieti=3;
-        scor=0;
-        directie='R';
-        invincibil=false;
-    }
+    void pierdeViata();
+    void adaugaScor(int);
+    void activeazaInvincibilitate();
 
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getVieti() const { return vieti; }
-    int getScor() const { return scor; }
+    void update(const Harta&) override;
+    void interact(Jucator&) override;
+    std::unique_ptr<Entitate> clone() const override;
+    void print(std::ostream&) const override;
 
-    void setPozitie(int nouX, int nouY) {
-        x=nouX;
-        y=nouY;
-    }
-
-    //setDirectie (char d) {
-    //    if (d=='U' || d=='D' || d=='L' || d=='R')
-     //       directie=d;
-    //}
-    //muta() {
-    //    switch (directie) {
-    //        case 'U': y-=viteza; break;
-    //        case 'D': y+=viteza; break;
-     //       case 'L': y-=viteza; break;
-     //       case 'R': y+=viteza; break;
-     //   }
-    //}
-
-    void manancaPunct() {
-        scor+=10;
-    }
-
-    void adaugaScor(int s) {
-        scor+=s;
-    }
-
-    void pierdeViata() {
-        vieti--;
-        if (vieti<0) vieti=0;
-    }
-    void activeazaInvincibilitate() {
-        invincibil=true;
-        start_invincibil=std::chrono::steady_clock::now();
-    }
-    bool esteInvincibil() {
-        if (invincibil) {
-            auto acum=std::chrono::steady_clock::now();
-            auto durata= std::chrono::duration_cast<std::chrono::seconds>(acum-start_invincibil).count();
-            if (durata > 3) {
-                invincibil=false;
-            }
-        }
-        return invincibil;
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, const Jucator& j) {
-        os << "Jucator (" << j.x << "," << j.y << ")"
-           << " | vieti=" << j.vieti
-           << " | scor=" << j.scor
-           << " | invincibil=" << (j.invincibil ? "da" : "nu");
-        return os;
-    }
+    void muta(char, const Harta&);
 };
-
-#endif //OOP_JUCATOR_H
